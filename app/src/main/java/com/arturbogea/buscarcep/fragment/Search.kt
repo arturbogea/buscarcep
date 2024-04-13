@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.arturbogea.buscarcep.api.AndressAPI
-import com.arturbogea.buscarcep.api.RetrofitAndress
+import com.arturbogea.buscarcep.api.AddressAPI
+import com.arturbogea.buscarcep.api.RetrofitAddress
 import com.arturbogea.buscarcep.databinding.FragmentSearchBinding
 import com.arturbogea.buscarcep.model.Address
 import kotlinx.coroutines.CoroutineScope
@@ -23,7 +23,7 @@ class Search : Fragment() {
     private var binding: FragmentSearchBinding? = null
 
     private val retrofit by lazy {
-        RetrofitAndress.apiCep
+        RetrofitAddress.apiCep
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +45,12 @@ class Search : Fragment() {
             }
         }
 
+        binding!!.btnClear.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
+                clearAddress()
+            }
+        }
+
         return view
     }
 
@@ -53,8 +59,8 @@ class Search : Fragment() {
         val cepDigitado = binding!!.editCEP.text.toString()
 
         try {
-            val andressAPI = retrofit.create(AndressAPI::class.java)
-            retornoApi = andressAPI.recuperarEndereco(cepDigitado)
+            val addressAPI = retrofit.create(AddressAPI::class.java)
+            retornoApi = addressAPI.recuperarEndereco(cepDigitado)
 
         }catch (e: Exception){
             e.printStackTrace()
@@ -65,11 +71,11 @@ class Search : Fragment() {
         if (retornoApi != null){
 
             if (retornoApi.isSuccessful){
-                val andress = retornoApi.body()
-                val rua = andress?.rua
-                val bairro = andress?.bairro
-                val cidade = andress?.cidade
-                val estado = andress?.estado
+                val address = retornoApi.body()
+                val rua = address?.rua
+                val bairro = address?.bairro
+                val cidade = address?.cidade
+                val estado = address?.estado
 
                 withContext(Dispatchers.Main){
                     binding!!.txtRua.text = rua
@@ -86,5 +92,22 @@ class Search : Fragment() {
 
     }
 
+    suspend fun clearAddress(){
+        val limparCep = binding!!.editCEP
+        val limparRua = binding!!.txtRua
+        val limparBairro = binding!!.txtBairro
+        val limparCidade = binding!!.txtCidade
+        val limparEstado = binding!!.txtUF
+
+
+
+        withContext(Dispatchers.Main){
+            limparCep.setText("")
+            limparRua.setText("")
+            limparBairro.setText("")
+            limparCidade.setText("")
+            limparEstado.setText("")
+        }
+    }
 
 }

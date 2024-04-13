@@ -3,7 +3,7 @@ package com.arturbogea.buscarcep.api
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitAndress {
+class RetrofitAddress {
 
     companion object{
         val apiCep = Retrofit.Builder()
