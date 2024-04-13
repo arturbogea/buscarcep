@@ -84,10 +84,17 @@ class Search : Fragment() {
                     binding!!.txtUF.text = estado
                 }
 
+            }else{
+
+                withContext(Dispatchers.Main){
+                    Toast.makeText(context, "CEP invalido", Toast.LENGTH_LONG).show()
+                }
             }
 
         }else{
-            Toast.makeText(context, "Digite um CEP valido", Toast.LENGTH_SHORT).show()
+            withContext(Dispatchers.Main){
+                Toast.makeText(context, "Erro", Toast.LENGTH_LONG).show()
+            }
         }
 
     }

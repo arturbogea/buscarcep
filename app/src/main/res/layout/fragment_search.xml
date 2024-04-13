@@ -101,7 +101,7 @@
         android:id="@+id/btnClear"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="80dp"
         android:background="@color/silver"
         android:backgroundTint="@color/grey21"
         app:layout_constraintBottom_toBottomOf="parent"
