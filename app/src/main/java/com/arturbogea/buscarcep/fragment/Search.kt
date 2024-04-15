@@ -40,13 +40,13 @@ class Search : Fragment() {
         val view = binding!!.root
 
         binding!!.btnBuscar.setOnClickListener {
-            CoroutineScope(Dispatchers.IO).launch {
+            CoroutineScope(Dispatchers.Main).launch {
                 getAddress()
             }
         }
 
         binding!!.btnClear.setOnClickListener {
-            CoroutineScope(Dispatchers.IO).launch {
+            CoroutineScope(Dispatchers.Main).launch {
                 clearAddress()
             }
         }
